@@ -18,17 +18,53 @@ const sequelize = new Sequelize("database", "username", "password", {
 });
 
 // define the Book model
-const Book = sequelize.define("book", {
-  id: {
+const user = sequelize.define("user", {
+  user_id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     primaryKey: true,
   },
-  title: {
+  username: {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  author: {
+  email: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  reservation_id: {
+    type: Sequelize.STRING,
+    foreignKey: false,
+  },
+});
+
+const movie = sequelize.define("movie", {
+  movie_id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  movie_name: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  genre: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+});
+
+const showtime = sequelize.define("showtime", {
+  showtime_id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  starttime: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  theater: {
     type: Sequelize.STRING,
     allowNull: false,
   },
@@ -105,4 +141,3 @@ app.delete("/books/:id", (req, res) => {
 // start the server
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
-  
