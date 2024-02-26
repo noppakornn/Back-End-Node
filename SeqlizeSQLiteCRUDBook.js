@@ -17,7 +17,7 @@ const sequelize = new Sequelize("database", "username", "password", {
   storage: "./Database/SQBooks.sqlite",
 });
 
-// define the Book model
+// define the Table model
 const user = sequelize.define("user", {
   user_id: {
     type: Sequelize.INTEGER,
