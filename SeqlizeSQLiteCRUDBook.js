@@ -32,10 +32,10 @@ const user = sequelize.define("user", {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  reservation_id: {
+  /*reservation_id: {
     type: Sequelize.STRING,
     foreignKey: false,
-  },
+  },*/
 });
 
 const movie = sequelize.define("movie", {
@@ -49,6 +49,18 @@ const movie = sequelize.define("movie", {
     allowNull: false,
   },
   genre: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+});
+
+const reservation = sequelize.define("user", {
+  reservation_id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  Reservation_Date_Time: {
     type: Sequelize.STRING,
     allowNull: false,
   },
@@ -193,6 +205,71 @@ app.delete("/movie/:id", (req, res) => {
         res.status(404).send("movie not found");
       } else {
         movie.destroy().then(() => {
+            res.send({});
+          }).catch((err) => {
+            res.status(500).send(err);
+          });
+      }
+    }).catch((err) => {
+      res.status(500).send(err);
+    });
+});
+
+// route to get all reservation
+app.get("/reservation", (req, res) => {
+  reservation.findAll().then((reservation) => {
+      res.json(reservation);
+    }).catch((err) => {
+      res.status(500).send(err);
+    });
+});
+
+// route to get a reservation by id
+app.get("/reservation/:id", (req, res) => {
+  reservation.findByPk(req.params.id).then((reservation) => {
+      if (!reservation) {
+        res.status(404).send("reservation not found");
+      } else {
+        res.json(reservation);
+      }
+    }).catch((err) => {
+      res.status(500).send(err);
+    });
+});
+
+// route to create a new reservation
+app.post("/reservation", (req, res) => {
+  reservation.create(req.body).then((reservation) => {
+      res.send(reservation);
+    }).catch((err) => {
+      res.status(500).send(err);
+    });
+});
+
+// route to update a reservation
+app.put("/reservation/:id", (req, res) => {
+  reservation.findByPk(req.params.id).then((reservation) => {
+      if (!reservation) {
+        res.status(404).send("reservation not found");
+      } else {
+        reservation.update(req.body).then(() => {
+            res.send(reservation);
+          }).catch((err) => {
+            res.status(500).send(err);
+          });
+      }
+    }).catch((err) => {
+      res.status(500).send(err);
+    });
+});
+
+// route to delete a reservation
+app.delete("/reservation/:id", (req, res) => {
+  reservation.findByPk(req.params.id).then((reservation) => {
+      if (!reservation) {
+        res.status(404).send("reservation not found");
+      } else {
+        reservation.destroy().then(() => {
             res.send({});
           }).catch((err) => {
             res.status(500).send(err);
