@@ -54,7 +54,7 @@ const movie = sequelize.define("movie", {
   },
 });
 
-const reservation = sequelize.define("user", {
+const reservation = sequelize.define("reservation", {
   reservation_id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
