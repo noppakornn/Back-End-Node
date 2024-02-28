@@ -38,17 +38,17 @@ const user = sequelize.define("user", {
   },
 });
 
-const movie = sequelize.define("movie", {
-  movie_id: {
+const table = sequelize.define("table", {
+  table_id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     primaryKey: true,
   },
-  movie_name: {
+  capacity: {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  genre: {
+  status: {
     type: Sequelize.STRING,
     allowNull: false,
   },
