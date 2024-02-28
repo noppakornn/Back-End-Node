@@ -18,23 +18,19 @@ const sequelize = new Sequelize("database", "username", "password", {
 });
 
 // define the Table model
-const user = sequelize.define("user", {
-  user_id: {
+const restaurant = sequelize.define("restaurant", {
+  restaurant_id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     primaryKey: true,
   },
-  username: {
+  name: {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  email: {
+  location: {
     type: Sequelize.STRING,
     allowNull: false,
-  },
-  reservation_id: {
-    type: Sequelize.STRING,
-    foreignKey: false,
   },
 });
 
@@ -54,17 +50,21 @@ const table = sequelize.define("table", {
   },
 });
 
-const showtime = sequelize.define("showtime", {
-  showtime_id: {
+const reservation = sequelize.define("reservation", {
+  reservation_id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     primaryKey: true,
   },
-  starttime: {
+  date: {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  theater: {
+  time: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  status: {
     type: Sequelize.STRING,
     allowNull: false,
   },
@@ -74,21 +74,21 @@ const showtime = sequelize.define("showtime", {
 sequelize.sync();
 
 // route to get all user
-app.get("/user", (req, res) => {
-  user.findAll().then((user) => {
-      res.json(user);
+app.get("/restaurant", (req, res) => {
+  restaurant.findAll().then((restaurant) => {
+      res.json(restaurant);
     }).catch((err) => {
       res.status(500).send(err);
     });
 });
 
 // route to get a user by id
-app.get("/user/:id", (req, res) => {
-  user.findByPk(req.params.id).then((user) => {
-      if (!user) {
-        res.status(404).send("user not found");
+app.get("/restaurant/:id", (req, res) => {
+  restaurant.findByPk(req.params.id).then((restaurant) => {
+      if (!restaurant) {
+        res.status(404).send("restaurant not found");
       } else {
-        res.json(user);
+        res.json(restaurant);
       }
     }).catch((err) => {
       res.status(500).send(err);
@@ -96,22 +96,22 @@ app.get("/user/:id", (req, res) => {
 });
 
 // route to create a new user
-app.post("/user", (req, res) => {
-  user.create(req.body).then((user) => {
-      res.send(user);
+app.post("/restaurant", (req, res) => {
+  restaurant.create(req.body).then((restaurant) => {
+      res.send(restaurant);
     }).catch((err) => {
       res.status(500).send(err);
     });
 });
 
 // route to update a user
-app.put("/user/:id", (req, res) => {
-  user.findByPk(req.params.id).then((user) => {
-      if (!user) {
-        res.status(404).send("user not found");
+app.put("/restaurant/:id", (req, res) => {
+  restaurant.findByPk(req.params.id).then((restaurant) => {
+      if (!restaurant) {
+        res.status(404).send("restaurant not found");
       } else {
         user.update(req.body).then(() => {
-            res.send(user);
+            res.send(restaurant);
           }).catch((err) => {
             res.status(500).send(err);
           });
@@ -122,12 +122,12 @@ app.put("/user/:id", (req, res) => {
 });
 
 // route to delete a user
-app.delete("/user/:id", (req, res) => {
-  user.findByPk(req.params.id).then((user) => {
-      if (!user) {
-        res.status(404).send("user not found");
+app.delete("/restaurant/:id", (req, res) => {
+  restaurant.findByPk(req.params.id).then((restaurant) => {
+      if (!restaurant) {
+        res.status(404).send("restaurant not found");
       } else {
-        user.destroy().then(() => {
+        restaurant.destroy().then(() => {
             res.send({});
           }).catch((err) => {
             res.status(500).send(err);
@@ -138,45 +138,45 @@ app.delete("/user/:id", (req, res) => {
     });
 });
 
-// route to get all movie
-app.get("/movie", (req, res) => {
-  movie.findAll().then((movie) => {
-      res.json(movie);
+// route to get all table
+app.get("/table", (req, res) => {
+  table.findAll().then((table) => {
+      res.json(table);
     }).catch((err) => {
       res.status(500).send(err);
     });
 });
 
-// route to get a movie by id
-app.get("/movie/:id", (req, res) => {
-  movie.findByPk(req.params.id).then((movie) => {
-      if (!movie) {
-        res.status(404).send("movie not found");
+// route to get a table by id
+app.get("/table/:id", (req, res) => {
+  table.findByPk(req.params.id).then((table) => {
+      if (!table) {
+        res.status(404).send("table not found");
       } else {
-        res.json(movie);
+        res.json(table);
       }
     }).catch((err) => {
       res.status(500).send(err);
     });
 });
 
-// route to create a new movie
-app.post("/movie", (req, res) => {
-  movie.create(req.body).then((movie) => {
-      res.send(movie);
+// route to create a new table
+app.post("/table", (req, res) => {
+  table.create(req.body).then((table) => {
+      res.send(table);
     }).catch((err) => {
       res.status(500).send(err);
     });
 });
 
-// route to update a movie
-app.put("/movie/:id", (req, res) => {
-  movie.findByPk(req.params.id).then((movie) => {
-      if (!movie) {
-        res.status(404).send("movie not found");
+// route to update a table
+app.put("/table/:id", (req, res) => {
+  table.findByPk(req.params.id).then((table) => {
+      if (!table) {
+        res.status(404).send("table not found");
       } else {
-        movie.update(req.body).then(() => {
-            res.send(movie);
+        table.update(req.body).then(() => {
+            res.send(table);
           }).catch((err) => {
             res.status(500).send(err);
           });
@@ -186,13 +186,13 @@ app.put("/movie/:id", (req, res) => {
     });
 });
 
-// route to delete a movie
-app.delete("/movie/:id", (req, res) => {
-  movie.findByPk(req.params.id).then((movie) => {
-      if (!movie) {
-        res.status(404).send("movie not found");
+// route to delete a table
+app.delete("/table/:id", (req, res) => {
+  table.findByPk(req.params.id).then((table) => {
+      if (!table) {
+        res.status(404).send("table not found");
       } else {
-        movie.destroy().then(() => {
+        table.destroy().then(() => {
             res.send({});
           }).catch((err) => {
             res.status(500).send(err);
@@ -204,21 +204,21 @@ app.delete("/movie/:id", (req, res) => {
 });
 
 // route to get all showtime
-app.get("/showtime", (req, res) => {
-  showtime.findAll().then((showtime) => {
-      res.json(showtime);
+app.get("/reservation", (req, res) => {
+  reservation.findAll().then((reservation) => {
+      res.json(reservation);
     }).catch((err) => {
       res.status(500).send(err);
     });
 });
 
 // route to get a showtime by id
-app.get("/showtime/:id", (req, res) => {
-  showtime.findByPk(req.params.id).then((showtime) => {
-      if (!showtime) {
-        res.status(404).send("showtime not found");
+app.get("/reservation/:id", (req, res) => {
+  reservation.findByPk(req.params.id).then((reservation) => {
+      if (!reservation) {
+        res.status(404).send("reservation not found");
       } else {
-        res.json(showtime);
+        res.json(reservation);
       }
     }).catch((err) => {
       res.status(500).send(err);
@@ -226,22 +226,22 @@ app.get("/showtime/:id", (req, res) => {
 });
 
 // route to create a new shoetime
-app.post("/showtime", (req, res) => {
-  showtime.create(req.body).then((showtime) => {
-      res.send(showtime);
+app.post("/reservation", (req, res) => {
+  reservation.create(req.body).then((reservation) => {
+      res.send(reservation);
     }).catch((err) => {
       res.status(500).send(err);
     });
 });
 
 // route to update a showtime
-app.put("/showtime/:id", (req, res) => {
-  showtime.findByPk(req.params.id).then((showtime) => {
-      if (!showtime) {
-        res.status(404).send("showtime not found");
+app.put("/reservation/:id", (req, res) => {
+  reservation.findByPk(req.params.id).then((reservation) => {
+      if (!reservation) {
+        res.status(404).send("reservation not found");
       } else {
-        showtime.update(req.body).then(() => {
-            res.send(showtime);
+        reservation.update(req.body).then(() => {
+            res.send(reservation);
           }).catch((err) => {
             res.status(500).send(err);
           });
@@ -252,12 +252,12 @@ app.put("/showtime/:id", (req, res) => {
 });
 
 // route to delete a showtime
-app.delete("/showtime/:id", (req, res) => {
-  showtime.findByPk(req.params.id).then((showtime) => {
-      if (!showtime) {
-        res.status(404).send("showtime not found");
+app.delete("/reservation/:id", (req, res) => {
+  reservation.findByPk(req.params.id).then((reservation) => {
+      if (!reservation) {
+        res.status(404).send("reservation not found");
       } else {
-        showtime.destroy().then(() => {
+        reservation.destroy().then(() => {
             res.send({});
           }).catch((err) => {
             res.status(500).send(err);
