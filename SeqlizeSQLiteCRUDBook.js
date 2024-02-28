@@ -110,7 +110,7 @@ app.put("/restaurant/:id", (req, res) => {
       if (!restaurant) {
         res.status(404).send("restaurant not found");
       } else {
-        user.update(req.body).then(() => {
+        restaurant.update(req.body).then(() => {
             res.send(restaurant);
           }).catch((err) => {
             res.status(500).send(err);
