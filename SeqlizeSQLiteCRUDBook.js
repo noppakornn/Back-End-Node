@@ -24,27 +24,19 @@ const restaurant = sequelize.define("restaurant", {
     autoIncrement: true,
     primaryKey: true,
   },
-  name: {
+  nameres: {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  location: {
+  address: {
     type: Sequelize.STRING,
     allowNull: false,
   },
-});
-
-const table = sequelize.define("table", {
-  table_id: {
-    type: Sequelize.INTEGER,
-    autoIncrement: true,
-    primaryKey: true,
-  },
-  capacity: {
+  opening_hours: {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  status: {
+  additional_info: {
     type: Sequelize.STRING,
     allowNull: false,
   },
@@ -56,6 +48,14 @@ const reservation = sequelize.define("reservation", {
     autoIncrement: true,
     primaryKey: true,
   },
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  email: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
   date: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -64,7 +64,7 @@ const reservation = sequelize.define("reservation", {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  status: {
+  capacity: {
     type: Sequelize.STRING,
     allowNull: false,
   },
@@ -128,71 +128,6 @@ app.delete("/restaurant/:id", (req, res) => {
         res.status(404).send("restaurant not found");
       } else {
         restaurant.destroy().then(() => {
-            res.send({});
-          }).catch((err) => {
-            res.status(500).send(err);
-          });
-      }
-    }).catch((err) => {
-      res.status(500).send(err);
-    });
-});
-
-// route to get all table
-app.get("/table", (req, res) => {
-  table.findAll().then((table) => {
-      res.json(table);
-    }).catch((err) => {
-      res.status(500).send(err);
-    });
-});
-
-// route to get a table by id
-app.get("/table/:id", (req, res) => {
-  table.findByPk(req.params.id).then((table) => {
-      if (!table) {
-        res.status(404).send("table not found");
-      } else {
-        res.json(table);
-      }
-    }).catch((err) => {
-      res.status(500).send(err);
-    });
-});
-
-// route to create a new table
-app.post("/table", (req, res) => {
-  table.create(req.body).then((table) => {
-      res.send(table);
-    }).catch((err) => {
-      res.status(500).send(err);
-    });
-});
-
-// route to update a table
-app.put("/table/:id", (req, res) => {
-  table.findByPk(req.params.id).then((table) => {
-      if (!table) {
-        res.status(404).send("table not found");
-      } else {
-        table.update(req.body).then(() => {
-            res.send(table);
-          }).catch((err) => {
-            res.status(500).send(err);
-          });
-      }
-    }).catch((err) => {
-      res.status(500).send(err);
-    });
-});
-
-// route to delete a table
-app.delete("/table/:id", (req, res) => {
-  table.findByPk(req.params.id).then((table) => {
-      if (!table) {
-        res.status(404).send("table not found");
-      } else {
-        table.destroy().then(() => {
             res.send({});
           }).catch((err) => {
             res.status(500).send(err);
@@ -267,6 +202,73 @@ app.delete("/reservation/:id", (req, res) => {
       res.status(500).send(err);
     });
 });
+
+/*
+// route to get all table
+app.get("/table", (req, res) => {
+  table.findAll().then((table) => {
+      res.json(table);
+    }).catch((err) => {
+      res.status(500).send(err);
+    });
+});
+
+// route to get a table by id
+app.get("/table/:id", (req, res) => {
+  table.findByPk(req.params.id).then((table) => {
+      if (!table) {
+        res.status(404).send("table not found");
+      } else {
+        res.json(table);
+      }
+    }).catch((err) => {
+      res.status(500).send(err);
+    });
+});
+
+// route to create a new table
+app.post("/table", (req, res) => {
+  table.create(req.body).then((table) => {
+      res.send(table);
+    }).catch((err) => {
+      res.status(500).send(err);
+    });
+});
+
+// route to update a table
+app.put("/table/:id", (req, res) => {
+  table.findByPk(req.params.id).then((table) => {
+      if (!table) {
+        res.status(404).send("table not found");
+      } else {
+        table.update(req.body).then(() => {
+            res.send(table);
+          }).catch((err) => {
+            res.status(500).send(err);
+          });
+      }
+    }).catch((err) => {
+      res.status(500).send(err);
+    });
+});
+
+// route to delete a table
+app.delete("/table/:id", (req, res) => {
+  table.findByPk(req.params.id).then((table) => {
+      if (!table) {
+        res.status(404).send("table not found");
+      } else {
+        table.destroy().then(() => {
+            res.send({});
+          }).catch((err) => {
+            res.status(500).send(err);
+          });
+      }
+    }).catch((err) => {
+      res.status(500).send(err);
+    });
+});
+*/
 
 // start the server
 const port = process.env.PORT || 3000;
