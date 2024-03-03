@@ -70,10 +70,26 @@ const reservation = sequelize.define("reservation", {
   },
 });
 
+const table = sequelize.define("table", {
+  table_id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  table_num: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  status: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+});
+
 // create the books table if it doesn't exist
 sequelize.sync();
 
-// route to get all user
+// route to get all
 app.get("/restaurant", (req, res) => {
   restaurant.findAll().then((restaurant) => {
       res.json(restaurant);
@@ -82,7 +98,7 @@ app.get("/restaurant", (req, res) => {
     });
 });
 
-// route to get a user by id
+// route to get by id
 app.get("/restaurant/:id", (req, res) => {
   restaurant.findByPk(req.params.id).then((restaurant) => {
       if (!restaurant) {
@@ -95,7 +111,7 @@ app.get("/restaurant/:id", (req, res) => {
     });
 });
 
-// route to create a new user
+// route to create
 app.post("/restaurant", (req, res) => {
   restaurant.create(req.body).then((restaurant) => {
       res.send(restaurant);
@@ -104,7 +120,7 @@ app.post("/restaurant", (req, res) => {
     });
 });
 
-// route to update a user
+// route to update
 app.put("/restaurant/:id", (req, res) => {
   restaurant.findByPk(req.params.id).then((restaurant) => {
       if (!restaurant) {
@@ -121,7 +137,7 @@ app.put("/restaurant/:id", (req, res) => {
     });
 });
 
-// route to delete a user
+// route to delete
 app.delete("/restaurant/:id", (req, res) => {
   restaurant.findByPk(req.params.id).then((restaurant) => {
       if (!restaurant) {
@@ -138,7 +154,7 @@ app.delete("/restaurant/:id", (req, res) => {
     });
 });
 
-// route to get all showtime
+// route to get all
 app.get("/reservation", (req, res) => {
   reservation.findAll().then((reservation) => {
       res.json(reservation);
@@ -147,7 +163,7 @@ app.get("/reservation", (req, res) => {
     });
 });
 
-// route to get a showtime by id
+// route to get a by id
 app.get("/reservation/:id", (req, res) => {
   reservation.findByPk(req.params.id).then((reservation) => {
       if (!reservation) {
@@ -160,8 +176,8 @@ app.get("/reservation/:id", (req, res) => {
     });
 });
 
-// route to create a new shoetime
-app.post("/reservation", (req, res) => {
+// route to create
+app.post("/reservations", (req, res) => {
   reservation.create(req.body).then((reservation) => {
       res.send(reservation);
     }).catch((err) => {
@@ -169,7 +185,7 @@ app.post("/reservation", (req, res) => {
     });
 });
 
-// route to update a showtime
+// route to update
 app.put("/reservation/:id", (req, res) => {
   reservation.findByPk(req.params.id).then((reservation) => {
       if (!reservation) {
@@ -186,7 +202,7 @@ app.put("/reservation/:id", (req, res) => {
     });
 });
 
-// route to delete a showtime
+// route to delete
 app.delete("/reservation/:id", (req, res) => {
   reservation.findByPk(req.params.id).then((reservation) => {
       if (!reservation) {
@@ -203,8 +219,6 @@ app.delete("/reservation/:id", (req, res) => {
     });
 });
 
-/*
-// route to get all table
 app.get("/table", (req, res) => {
   table.findAll().then((table) => {
       res.json(table);
@@ -213,7 +227,7 @@ app.get("/table", (req, res) => {
     });
 });
 
-// route to get a table by id
+// route to get by id
 app.get("/table/:id", (req, res) => {
   table.findByPk(req.params.id).then((table) => {
       if (!table) {
@@ -226,7 +240,7 @@ app.get("/table/:id", (req, res) => {
     });
 });
 
-// route to create a new table
+// route to create
 app.post("/table", (req, res) => {
   table.create(req.body).then((table) => {
       res.send(table);
@@ -235,7 +249,7 @@ app.post("/table", (req, res) => {
     });
 });
 
-// route to update a table
+// route to update
 app.put("/table/:id", (req, res) => {
   table.findByPk(req.params.id).then((table) => {
       if (!table) {
@@ -252,7 +266,7 @@ app.put("/table/:id", (req, res) => {
     });
 });
 
-// route to delete a table
+// route to delete
 app.delete("/table/:id", (req, res) => {
   table.findByPk(req.params.id).then((table) => {
       if (!table) {
@@ -268,7 +282,6 @@ app.delete("/table/:id", (req, res) => {
       res.status(500).send(err);
     });
 });
-*/
 
 // start the server
 const port = process.env.PORT || 3000;
