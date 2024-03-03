@@ -64,7 +64,7 @@ const reservation = sequelize.define("reservation", {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  capacity: {
+  num_people: {
     type: Sequelize.STRING,
     allowNull: false,
   },
