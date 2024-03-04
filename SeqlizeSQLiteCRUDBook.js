@@ -68,6 +68,10 @@ const reservation = sequelize.define("reservation", {
     type: Sequelize.STRING,
     allowNull: false,
   },
+  table_num: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
 });
 
 const table = sequelize.define("table", {
@@ -75,10 +79,6 @@ const table = sequelize.define("table", {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     primaryKey: true,
-  },
-  table_num: {
-    type: Sequelize.STRING,
-    allowNull: false,
   },
   status: {
     type: Sequelize.STRING,
