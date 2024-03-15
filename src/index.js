@@ -10,17 +10,16 @@ const app = express();
 // parse incoming requests
 app.use(express.json());
 
-const db_url = 'postgres://webadmin:RKOdok82164@10.104.2.228:5432/SQBooks'
+//const db_url = 'postgres://webadmin:RKOdok82164@node58139-noderestjame.proen.app.ruk-com.cloud:11883/SQBooks'
 
-const sequelize = new Sequelize(db_url);
+//const sequelize = new Sequelize(db_url);
 
 // create a connection to the database
-/*const sequelize = new Sequelize("database", "username", "password", {
+const sequelize = new Sequelize("database", "username", "password", {
   host: "localhost",
   dialect: "sqlite",
   storage: "./Database/SQBooks.sqlite",
 });
-*/
 
 // define the Table model
 const restaurant = sequelize.define("restaurant", {
