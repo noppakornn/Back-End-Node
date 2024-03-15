@@ -9,6 +9,7 @@ const app = express();
 
 // parse incoming requests
 app.use(express.json());
+app.use(bodyParser.json());
 
 //const db_url = 'postgres://webadmin:RKOdok82164@node58139-noderestjame.proen.app.ruk-com.cloud:11883/SQBooks'
 
@@ -90,8 +91,24 @@ const table = sequelize.define("table", {
   },
 });
 
+const users = [
+  { id: 1, username: 'user1', password: '1234' }
+];
+
 // create the books table if it doesn't exist
 sequelize.sync();
+
+app.post('/login', (req, res) => {
+  const { username, password } = req.body;
+
+  // Check if user exists and password is correct
+  const user = users.find(u => u.username === username && u.password === password);
+  if (user) {
+      res.status(200).json({ message: 'Login successful!' });
+  } else {
+      res.status(401).json({ message: 'Invalid username or password' });
+  }
+});
 
 // route to get all
 app.get("/restaurant", (req, res) => {
