@@ -6,7 +6,7 @@
   "scripts": {
     "format": "prettier --write *.js",
     "start": "node index.js",
-    "dev": "nodemon SeqlizeSQLiteCRUDBook.js"
+    "dev": "nodemon src/index.js"
   },
   "keywords": [],
   "author": "",
